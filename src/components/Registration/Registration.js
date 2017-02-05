@@ -36,22 +36,34 @@ export default class Registration extends React.Component{
   fetchStudents(){
     const url = this.props.host + '/students';
     axios.get(url).then(r => {
-      const students = r.data.map(s => ({css: 'abc', id: s.id, text: s.email}));
-      this.setState({...this.state, students: students});
+      const students = r.data.map(s => ({css: 'empty', id: s.id, text: s.email}));
+      this.setState({...this.state, students});
     }).catch(e => e);
   }
 
   fetchKlasses(){
     const url = this.props.host + '/klasses';
     axios.get(url).then(r => {
-      const klasses = r.data.map(k => ({css: 'abc', id: k.id, text: k.name}));
-      this.setState({...this.state, klasses: klasses});
+      const klasses = r.data.map(k => ({css: 'empty', id: k.id, text: k.name}));
+      this.setState({...this.state, klasses});
     }).catch(e => e);
   }
 
   studentClick(e){
     const id = +e.target.getAttribute('data-id');
-    console.log('student:', id);
+    const url = `${this.props.host}/students/${id}/klasses`;
+    axios.get(url).then(r => {
+      const ids = r.data.map(k => k.id);
+      const klasses = this.state.klasses.map(k => {
+        const css = ids.includes(k.id) ? "present" : "empty";
+        return {css, id: k.id, text: k.text};
+      });
+      const students = this.state.students.map(s => {
+        const css = s.id === id ? "present" : "empty";
+        return {css, id: s.id, text: s.text};        
+      });
+      this.setState({...this.state, klasses, students});
+    }).catch(e => e);
   }
 
   klassClick(e){

@@ -1,0 +1,7 @@
+.box .empty{
+  color: gray;
+}
+
+.box .present{
+  color: red;
+}
