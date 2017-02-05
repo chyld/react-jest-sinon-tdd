@@ -6,7 +6,7 @@ export default (props) => {
     <div className="list">
       <h1>{props.header}</h1>
       {
-        props.items.map((item, idx) => <Box key={idx} css={item.css} text={item.text} press={props.press} />)
+        props.items.map((item, idx) => <Box key={idx} css={item.css} id={item.id} text={item.text} press={props.press} />)
       }
     </div>
   );
