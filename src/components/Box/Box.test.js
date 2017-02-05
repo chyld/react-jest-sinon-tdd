@@ -18,8 +18,8 @@ describe('Box', function() {
   });
 
   it('should render without throwing an error', function() {
-    const html = '<div class="box"><button></button></div>';
-    expect(shallow(<Box />).html()).to.equal(html);
+    const html = '<div class="box"><div class="a b c"></div></div>';
+    expect(shallow(<Box css="a b c" />).html()).to.equal(html);
   });
 
   it('should be selectable by class "box"', function() {
@@ -33,7 +33,7 @@ describe('Box', function() {
   it('should call external function when button is pressed', function() {
     const press = sinon.stub();
     const wrapper = mount(<Box press={press} />);
-    wrapper.find('button').simulate('click');
+    wrapper.find('div > div').simulate('click');
     expect(press.callCount).to.equal(1);
   });
 });
